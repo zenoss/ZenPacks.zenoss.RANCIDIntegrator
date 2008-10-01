@@ -46,7 +46,7 @@ class ZenRancid(ZenScriptBase):
             for entry in entries:
                 rancid_db.write("%s\n" % (entry,))
 
-        rancid_db.close()
+            rancid_db.close()
 
     def validateDevice(self, device):
         if not hasattr(device, 'zRancidType'):
