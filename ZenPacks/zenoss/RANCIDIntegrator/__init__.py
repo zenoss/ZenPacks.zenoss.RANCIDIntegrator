@@ -7,6 +7,7 @@
 import Globals
 import os
 from Products.ZenModel.ZenPack import ZenPackBase
+from Products.ZenUtils.Utils import zenPath
 from Products.CMFCore.DirectoryView import registerDirectory
 
 skinsDir = os.path.join(os.path.dirname(__file__), 'skins')
@@ -28,10 +29,16 @@ class ZenPack(ZenPackBase):
     def install(self, app):
         ZenPackBase.install(self, app)
         self.setupZProperties(app)
+        self.symlinkScript()
 
     def upgrade(self, app):
         ZenPackBase.upgrade(self, app)
         self.setupZProperties(app)
+        self.symlinkScript()
+    
+    def remove(self, app, leaveObjects=False):
+        self.removeScriptSymlink()
+        ZenPackBase.remove(self, app, leaveObjects)
 
 
     def setupZProperties(self, app):
@@ -54,3 +61,10 @@ class ZenPack(ZenPackBase):
         else:
             dc._setProperty('zLinks', rancid_link)
 
+    
+    def symlinkScript(self):
+        os.system('ln -sf %s/zenrancid.py %s/' %
+            (self.path('bin'), zenPath('bin')))
+    
+    def removeScriptSymlink(self):
+        os.system('rm -f %s/zenrancid.py' % (zenPath('bin')))
