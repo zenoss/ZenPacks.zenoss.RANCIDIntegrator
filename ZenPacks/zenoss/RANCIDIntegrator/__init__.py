@@ -63,8 +63,8 @@ class ZenPack(ZenPackBase):
 
     
     def symlinkScript(self):
-        os.system('ln -sf %s/zenrancid.py %s/' %
+        os.system('ln -sf %s/zenrancid %s/' %
             (self.path('bin'), zenPath('bin')))
     
     def removeScriptSymlink(self):
-        os.system('rm -f %s/zenrancid.py' % (zenPath('bin')))
+        os.system('rm -f %s/zenrancid' % (zenPath('bin')))

@@ -31,7 +31,7 @@ class ZenRancid(ZenScriptBase):
             else:
                 status = 'down'
 
-            log.debug("Added %s (%s) to %s with type: %s",
+            log.info("Added %s (%s) to %s with type: %s",
                 dev.id, dev.manageIp, dev.zRancidGroup, dev.zRancidType)
 
             group_buckets[dev.zRancidGroup].append(
