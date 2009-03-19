@@ -26,6 +26,9 @@ class ZenRancid(ZenScriptBase):
         self.parser.add_option('--update', dest='update',
             action='store_true', default=False,
             help='Update router.db instead of replacing it')
+        self.parser.add_option('--name', dest='nameInsteadOfIp',
+            action='store_true', default=False,
+            help="Write device name instead of IP to router.db")
 
 
     def run(self):
@@ -44,8 +47,13 @@ class ZenRancid(ZenScriptBase):
 
             log.info("Added %s (%s) to %s with type: %s",
                 dev.id, dev.manageIp, dev.zRancidGroup, dev.zRancidType)
-
-            group_buckets[dev.zRancidGroup][dev.manageIp] = dict(
+            
+            if self.options.nameInsteadOfIp:
+                deviceKey = dev.id
+            else:
+                deviceKey = dev.manageIp
+            
+            group_buckets[dev.zRancidGroup][deviceKey] = dict(
                 type=dev.zRancidType, status=status)
 
         for group, entries in group_buckets.items():
@@ -71,9 +79,9 @@ class ZenRancid(ZenScriptBase):
             
             # Write out the merged router.db file.
             rancid_db = open(filename, 'w')
-            for ip, entry in entryList:
+            for deviceKey, entry in entryList:
                 rancid_db.write("%s:%s:%s\n" % (
-                    ip, entry['type'], entry['status']))
+                    deviceKey, entry['type'], entry['status']))
 
             rancid_db.close()
 
