@@ -35,7 +35,9 @@ class ZenRancid(ZenScriptBase):
         group_buckets = {}
 
         for dev in self.dmd.Devices.getSubDevices():
-            if not self.validateDevice(dev): continue
+            if not self.validateDevice(dev):
+                log.info("Not adding %s (%s)", dev.id, dev.manageIp)
+                continue
 
             if not group_buckets.has_key(dev.zRancidGroup):
                 group_buckets[dev.zRancidGroup] = {}
