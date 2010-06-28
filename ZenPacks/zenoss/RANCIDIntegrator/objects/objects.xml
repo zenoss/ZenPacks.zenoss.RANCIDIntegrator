@@ -11,6 +11,9 @@ ciscoConfigManEvent
 <property type="string" id="example" mode="w" >
 snmp trap ciscoConfigManEvent from router.mydomain.com
 </property>
+<property visible="True" type="string" id="zEventAction" >
+status
+</property>
 <property visible="True" type="int" id="zEventSeverity" >
 2
 </property>
@@ -1163,7 +1166,7 @@ recorded in ccmHistoryEventTable.
 <!-- ('', 'zport', 'dmd', 'ZenEventManager', 'commands', 'rancid-run') -->
 <object id='/zport/dmd/ZenEventManager/commands/rancid-run' module='Products.ZenEvents.EventCommand' class='EventCommand'>
 <property type="string" id="command" mode="w" >
-${dev/cRancidRoot}/bin/rancid-runm -r ${dev/manageIp} -t ${dev/cRancidType} ${dev/cRancidGroup}
+${dev/zRancidRoot}/bin/rancid-run -r ${dev/manageIp} ${dev/zRancidGroup}
 </property>
 <property type="string" id="where" mode="w" >
 (eventClassKey = 'ciscoConfigManEvent')
