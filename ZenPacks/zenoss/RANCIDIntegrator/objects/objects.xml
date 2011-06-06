@@ -1163,25 +1163,4 @@ recorded in ccmHistoryEventTable.
 </object>
 </tomanycont>
 </object>
-<!-- ('', 'zport', 'dmd', 'ZenEventManager', 'commands', 'rancid-run') -->
-<object id='/zport/dmd/ZenEventManager/commands/rancid-run' module='Products.ZenEvents.EventCommand' class='EventCommand'>
-<property type="string" id="command" mode="w" >
-${dev/zRancidRoot}/bin/rancid-run -r ${dev/manageIp} ${dev/zRancidGroup}
-</property>
-<property type="string" id="where" mode="w" >
-(eventClassKey = 'ciscoConfigManEvent')
-</property>
-<property type="int" id="defaultTimeout" mode="w" >
-600
-</property>
-<property type="boolean" id="enabled" mode="w" >
-True
-</property>
-<property type="int" id="delay" mode="w" >
-0
-</property>
-<property type="int" id="repeatTime" mode="w" >
-0
-</property>
-</object>
 </objects>
