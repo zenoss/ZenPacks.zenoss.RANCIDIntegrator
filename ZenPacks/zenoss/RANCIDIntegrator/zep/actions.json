@@ -22,7 +22,7 @@
             "name": "rancid-run",
             "rule": {
                 "api_version": 1,
-                "source": "(evt.eventClassKey == \"ciscoConfigManEvent\")",
+                "source": "(evt.event_class_key == \"ciscoConfigManEvent\")",
                 "type": 1
             }
         }
