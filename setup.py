@@ -6,6 +6,7 @@ VERSION = '2.1.4'
 AUTHOR = 'Zenoss'
 LICENSE = ''
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.zenoss']
+PACKAGES = ['ZenPacks', 'ZenPacks.zenoss', 'ZenPacks.zenoss.RANCIDIntegrator']
 INSTALL_REQUIRES = []
 COMPAT_ZENOSS_VERS = '>= 2.2'
 PREV_ZENPACK_NAME = 'RANCIDIntegrator'
@@ -14,15 +15,6 @@ PREV_ZENPACK_NAME = 'RANCIDIntegrator'
 # Zenoss will not overwrite any changes you make below here.
 
 from setuptools import setup, find_packages
-
-# 'make build' will build the c extensions and copy those files
-# as well as decimal.py into the ZenPack's lib dir.
-import subprocess
-p = subprocess.Popen('make build', shell=True)
-if p.poll() == None:
-	p.wait()
-if p.returncode != 0:
-    raise Exception('make exited with an error: %s' % p.returncode)
 
 setup(
     # This ZenPack metadata should usually be edited with the Zenoss
@@ -53,13 +45,9 @@ setup(
     # in the binary egg when it is built.
     include_package_data = True,
     
-    # Tell setuptools what non-python files should also be included
-    # with the binary egg.
-    package_data = { 
-         '': ['*.txt'],
-         NAME: ['objects/*','skins/*/*','services/*', 'reports/*/*',
-                'modeler/*/*', 'daemons/*', 'lib/*', 'libexec/*', 'bin/*'],
-         },  
+    # The MANIFEST.in file is the recommended way of including additional files
+    # in your ZenPack. package_data is another.
+    #package_data = {}
 
     # Indicate dependencies on other python modules or ZenPacks.  This line
     # is modified by zenoss when the ZenPack edit page is submitted.  Zenoss
