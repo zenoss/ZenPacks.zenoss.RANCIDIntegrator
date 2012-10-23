@@ -1,31 +1,24 @@
-##############################################################################
-# 
-# Copyright (C) Zenoss, Inc. 2007, all rights reserved.
-# 
+######################################################################
+#
+# Copyright 2007 Zenoss, Inc.  All Rights Reserved.
+#
 # This content is made available according to terms specified in
 # License.zenoss under the directory where your Zenoss product is installed.
-# 
-##############################################################################
+#
+######################################################################
 
+import os
 
 import Globals
-import os
 from Products.ZenModel.ZenPack import ZenPackBase
 from Products.ZenUtils.Utils import zenPath
-from Products.CMFCore.DirectoryView import registerDirectory
-
-skinsDir = os.path.join(os.path.dirname(__file__), 'skins')
-if os.path.isdir(skinsDir):
-    registerDirectory(skinsDir, globals())
 
 
 class ZenPack(ZenPackBase):
-    """ RANCIDIntegrator loader
-    """
 
     packZProperties = [
             ('zRancidRoot', '/opt/rancid', 'string'),
-            ('zRancidUrl', 'http://rancid.mydomain.com/viewvc', 'string'),
+            ('zRancidUrl', 'http://rancid.example.com/viewvc', 'string'),
             ('zRancidGroup', '', 'string'),
             ('zRancidType', '', 'string'),
             ]
@@ -43,7 +36,6 @@ class ZenPack(ZenPackBase):
     def remove(self, app, leaveObjects=False):
         self.removeScriptSymlink()
         ZenPackBase.remove(self, app, leaveObjects)
-
 
     def setupZProperties(self, app):
         try:
@@ -65,7 +57,6 @@ class ZenPack(ZenPackBase):
         else:
             dc._setProperty('zLinks', rancid_link)
 
-    
     def symlinkScript(self):
         os.system('ln -sf %s/zenrancid %s/' %
             (self.path('bin'), zenPath('bin')))
