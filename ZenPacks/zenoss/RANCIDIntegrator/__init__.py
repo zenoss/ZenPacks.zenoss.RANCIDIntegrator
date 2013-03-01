@@ -40,7 +40,7 @@ class ZenPack(ZenPackBase):
     def setupZProperties(self, app):
         try:
             dc = app.zport.dmd.Devices.getOrganizer('Network/Router/Cisco')
-        except AttributeError:
+        except (AttributeError, KeyError):
             return
 
         if not dc.hasProperty('zRancidGroup'):
