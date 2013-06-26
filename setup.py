@@ -7,7 +7,7 @@ AUTHOR = 'Zenoss'
 LICENSE = ''
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.zenoss']
 PACKAGES = ['ZenPacks', 'ZenPacks.zenoss', 'ZenPacks.zenoss.RANCIDIntegrator']
-INSTALL_REQUIRES = ['Zenoss >= 2.2']
+INSTALL_REQUIRES = []
 COMPAT_ZENOSS_VERS = '>= 2.2'
 PREV_ZENPACK_NAME = 'RANCIDIntegrator'
 # STOP_REPLACEMENTS
