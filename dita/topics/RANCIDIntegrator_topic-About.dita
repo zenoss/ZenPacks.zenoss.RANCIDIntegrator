@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:topic" "topic.dtd">
+<topic id="d52e6"><title>About</title><body><p>The RANCIDIntegrator ZenPack allows integration between the popular
+    <xref href="http://www.shrubbery.net/rancid/" scope="external" format="html">RANCID</xref>
+    configuration management tool and <ph conkeyref="names/platform"/>. The integration points between the tools are:</p><ul>
+      <li>
+        <p><ph conkeyref="names/platform"/> will
+        build the <filepath>router.db</filepath> file for RANCID. This allows
+        for the centralization of administration activities and reduces the
+        duplication of effort normally required to maintain the two
+        tools.</p>
+      </li>
+
+      <li>
+        <p>Implementation of this feature is as easy as adding a
+        <cmdname>cron</cmdname> job to execute
+        <cmdname>$ZENHOME/bin/zenrancid</cmdname> to update the
+        <filepath>router.db</filepath> file.</p>
+      </li>
+
+      <li>
+        <p><ph conkeyref="names/platform"/> will
+        automatically run RANCID's <cmdname>rancid-runm</cmdname> tool on a
+        single device in response to a <codeph outputclass="literal">ciscoConfigManEvent</codeph>
+        SNMP trap being sent from the device to <ph conkeyref="names/platform"/>. Cisco devices will
+        send this trap whenever their configuration is changed. This allows
+        for real-time capturing of router configuration changes in your CVS
+        repository.</p>
+      </li>
+    </ul><note>
+      <p>The RANCID integrator is dependent on a connection to the Zope
+      server, hence it can run only on the <ph conkeyref="names/platform"/> master and as such works
+      only with managed resources on the master.</p>
+    </note></body></topic>

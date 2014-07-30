@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:map" "map.dtd">
+<map>
+   <title>RANCIDIntegrator</title>
+   <topicref href="topics/RANCIDIntegrator.dita">
+      <topicref href="topics/prerequisites.dita"/>
+      <topicref href="topics/RANCIDIntegrator_topic-Enable-Integration_topic-Configure-Cisco-Devices-to-Send-Traps.dita"/>
+      <topicref href="topics/RANCIDIntegrator_topic-Enable-Integration_topic-Configure-RANCID-Update-Information-in-Resource-Manager.dita"/>
+   </topicref>
+</map>
