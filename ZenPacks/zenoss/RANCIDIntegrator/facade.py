@@ -102,8 +102,6 @@ class RANCIDIntegratorFacade(ZuulFacade):
         The 'comments' section will be used for setting collector name
         """
         dbentries = self.get_rancid_configs(name_instead_of_ip)
-        import pdb
-        pdb.set_trace()
         rancid_db = cStringIO.StringIO()
 
         for group in dbentries:
@@ -155,8 +153,8 @@ class RANCIDIntegratorFacade(ZuulFacade):
                 data.append('setPerformanceMonitor="%s"' % collector)
 
             zbfile.write('"%s" %s\n' % (id, ', '.join(data)))
-        contents = zbfile.getvalue()
 
+        contents = zbfile.getvalue()
         zbfile.close()
 
         return contents

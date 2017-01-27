@@ -61,7 +61,7 @@ Install the ZenPack via the command line and restart Zenoss:
 ::
 
  zenpack --install ZenPacks.zenoss.RANCIDIntegrator-*.*.*-py2.7.egg
- zenoss restart``
+ zenoss restart
 
 Removing
 ---------
