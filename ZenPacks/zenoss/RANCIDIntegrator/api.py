@@ -1,3 +1,12 @@
+##############################################################################
+#
+# Copyright (C) Zenoss, Inc. 2017, all rights reserved.
+#
+# This content is made available according to terms specified in
+# License.zenoss under the directory where your Zenoss product is installed.
+#
+##############################################################################
+
 """Api.py."""
 
 import logging
@@ -21,7 +30,7 @@ class RANCIDIntegratorRouter(DirectRouter):
         return getFacade('rancidintegrator', self.context)
 
     @serviceConnectionError
-    def getRouters(self, name_instead_of_ip=False):    # noqa
+    def getRouters(self, name_instead_of_ip):    # noqa
         """Get rancid router.db file."""
         facade = self._getFacade()
         success, message = facade.getRouters(name_instead_of_ip)
@@ -32,12 +41,11 @@ class RANCIDIntegratorRouter(DirectRouter):
             return DirectResponse.fail(message)
 
     @serviceConnectionError
-    def getBatchLoadFile(self, router_content, name_instead_of_ip):    # noqa
+    def getBatchLoadFile(self, router_content):    # noqa
         """Export router.db file contents to batchload format string."""
         facade = self._getFacade()
         success, message = facade.getBatchLoadFile(
-            router_content,
-            name_instead_of_ip
+            router_content
         )
 
         if success:

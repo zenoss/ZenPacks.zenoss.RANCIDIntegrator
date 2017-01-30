@@ -7,4 +7,9 @@
 #
 ##############################################################################
 
-__import__('pkg_resources').declare_namespace(__name__)
+"""Exceptions for RANCIDIntegrator."""
+
+
+class NoIpException(Exception):
+    """Raise if device has no IP addr."""
+    pass

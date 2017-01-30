@@ -1,13 +1,23 @@
+##############################################################################
+#
+# Copyright (C) Zenoss, Inc. 2017, all rights reserved.
+#
+# This content is made available according to terms specified in
+# License.zenoss under the directory where your Zenoss product is installed.
+#
+##############################################################################
+
 """Facade for RANCIDIntegrator API endpoint."""
 
 import cStringIO
 import logging
 
+from Products.ZenUtils.IpUtil import isip
+from Products.Zuul.facades import ZuulFacade
+
 from zope.interface import implements
 
-from Products.Zuul.facades import ZuulFacade
-from Products.ZenUtils.IpUtil import isip
-
+from .exceptions import NoIpException
 from .interfaces import IRANCIDIntegratorFacade
 
 
@@ -72,6 +82,10 @@ class RANCIDIntegratorFacade(ZuulFacade):
             if name_instead_of_ip:
                 device_key = dev.id
             else:
+                if not dev.manageIp:
+                    raise NoIpException(
+                        "Device %s has no IP address assigned." % dev.id
+                    )
                 device_key = dev.manageIp
 
             group_buckets[dev.zRancidGroup][device_key] = dict(
@@ -86,11 +100,10 @@ class RANCIDIntegratorFacade(ZuulFacade):
         """API."""
         return True, self.get_rancid_db(name_instead_of_ip)
 
-    def getBatchLoadFile(self, router_content, name_instead_of_ip):     # noqa
+    def getBatchLoadFile(self, router_content):     # noqa
         """API."""
         return True, self.export_to_batchload(
-            router_content,
-            name_instead_of_ip
+            router_content
         )
 
     def get_rancid_db(self, name_instead_of_ip):
@@ -120,7 +133,7 @@ class RANCIDIntegratorFacade(ZuulFacade):
 
         return contents
 
-    def export_to_batchload(self, router_content, name_instead_of_ip):
+    def export_to_batchload(self, router_content):
         """Get router.db file content and return batchload format string."""
         if not router_content:
             return ''
@@ -141,7 +154,7 @@ class RANCIDIntegratorFacade(ZuulFacade):
                 data.append('setProductionState=-1')
                 id = id[1:]
 
-            if name_instead_of_ip and isip(id):
+            if isip(id):
                 data.append('setManageIp="%s"' % id)
 
             collector = ''
