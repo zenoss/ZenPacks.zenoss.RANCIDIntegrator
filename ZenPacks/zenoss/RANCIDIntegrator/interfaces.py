@@ -29,6 +29,3 @@ class IRANCIDIntegratorFacade(IFacade):
 
     def export_to_batchload(self, router_content):     # noqa
         """Get router.db file content and return batchload format string."""
-
-    def getBatchLoadFile(self, router_content):    # noqa
-        """Export router.db file contents to batchload format string."""

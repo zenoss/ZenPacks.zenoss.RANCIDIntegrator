@@ -39,16 +39,3 @@ class RANCIDIntegratorRouter(DirectRouter):
             return DirectResponse.succeed(result=message)
         else:
             return DirectResponse.fail(message)
-
-    @serviceConnectionError
-    def getBatchLoadFile(self, router_content):    # noqa
-        """Export router.db file contents to batchload format string."""
-        facade = self._getFacade()
-        success, message = facade.getBatchLoadFile(
-            router_content
-        )
-
-        if success:
-            return DirectResponse.succeed(result=message)
-        else:
-            return DirectResponse.fail(message)

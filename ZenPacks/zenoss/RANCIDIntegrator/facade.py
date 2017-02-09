@@ -83,9 +83,11 @@ class RANCIDIntegratorFacade(ZuulFacade):
                 device_key = dev.id
             else:
                 if not dev.manageIp:
-                    raise NoIpException(
-                        "Device %s has no IP address assigned." % dev.id
+                    log.error(
+                        "Skipping device %s with no IP address assigned.",
+                        dev.id
                     )
+                    continue
                 device_key = dev.manageIp
 
             group_buckets[dev.zRancidGroup][device_key] = dict(
@@ -99,12 +101,6 @@ class RANCIDIntegratorFacade(ZuulFacade):
     def getRouters(self, name_instead_of_ip):   # noqa
         """API."""
         return True, self.get_rancid_db(name_instead_of_ip)
-
-    def getBatchLoadFile(self, router_content):     # noqa
-        """API."""
-        return True, self.export_to_batchload(
-            router_content
-        )
 
     def get_rancid_db(self, name_instead_of_ip):
         """
@@ -128,10 +124,15 @@ class RANCIDIntegratorFacade(ZuulFacade):
                     )
                 )
 
-        contents = rancid_db.getvalue()
+        router_content = rancid_db.getvalue()
         rancid_db.close()
 
-        return contents
+        batchload_content = self.export_to_batchload(router_content)
+
+        return {
+            "router_db": router_content,
+            "batchLoad": batchload_content
+        }
 
     def export_to_batchload(self, router_content):
         """Get router.db file content and return batchload format string."""
@@ -157,13 +158,12 @@ class RANCIDIntegratorFacade(ZuulFacade):
             if isip(id):
                 data.append('setManageIp="%s"' % id)
 
-            collector = ''
+            collector = 'localhost'  # default collector
             try:
                 collector = entry[3]
             except KeyError:
                 pass
-            if collector:
-                data.append('setPerformanceMonitor="%s"' % collector)
+            data.append('setPerformanceMonitor="%s"' % collector)
 
             zbfile.write('"%s" %s\n' % (id, ', '.join(data)))
 

@@ -81,10 +81,13 @@ To get ``router.db`` file contents, run:
 
 ::
 
- zenoss_api rancidintegrator_router RANCIDIntegratorRouter getRouters '{"name_instead_of_ip":"True"}'
+ zenoss_api rancidintegrator_router RANCIDIntegratorRouter getRouters '{"name_instead_of_ip": true}'
 
-To generate ``batchload`` file from ``router.db`` file run:
+Response example:
 
 ::
 
- zenoss_api rancidintegrator_router RANCIDIntegratorRouter getBatchLoadFile '{"router_content": "$ROUTERDBCONTENT"}'
+{"uuid": "9ec44304-3ec2-41aa-adc7-b7d358084ea5", "action": "RANCIDIntegratorRouter", "result": {"result": {"router_db": "test_device2;cisco;down;localhost\ntest_device1;cisco;up;localhost\n", "batchload": "\"test_device2\" zRancidType=\"cisco\", setPerformanceMonitor=\"localhost\"\n\"test_device1\" zRancidType=\"cisco\", setPerformanceMonitor=\"localhost\"\n"}, "success": true}, "tid": 1, "type": "rpc", "method": "getRouters"}
+
+The ``router.db`` content is accessible by ``router_db`` key.
+The ``batchLoad`` content is accessible by ``batchLoad`` key.
