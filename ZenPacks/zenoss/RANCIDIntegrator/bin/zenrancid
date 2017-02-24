@@ -1,8 +1,0 @@
-#! /usr/bin/env bash
-. $ZENHOME/bin/zenfunctions
-
-MYPATH=`python -c "import os.path; print os.path.realpath('$0')"`
-THISDIR=`dirname $MYPATH`
-PRGHOME=`dirname $THISDIR`
-
-$PYTHON $PRGHOME/zenrancid.py "$CMD" $*
