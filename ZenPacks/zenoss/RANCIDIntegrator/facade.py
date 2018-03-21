@@ -17,7 +17,6 @@ from Products.Zuul.facades import ZuulFacade
 
 from zope.interface import implements
 
-from .exceptions import NoIpException
 from .interfaces import IRANCIDIntegratorFacade
 
 
