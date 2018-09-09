@@ -12,7 +12,6 @@
 import cStringIO
 import logging
 
-from Products.ZenUtils.IpUtil import isip
 from Products.Zuul.facades import ZuulFacade
 
 from zope.interface import implements
@@ -90,9 +89,12 @@ class RANCIDIntegratorFacade(ZuulFacade):
                 device_key = dev.manageIp
 
             group_buckets[dev.zRancidGroup][device_key] = dict(
+                name=device_key,
+                group=dev.zRancidGroup,
                 type=dev.zRancidType,
                 status=status,
-                collector=dev.getPerformanceServer().id
+                collector=dev.getPerformanceServer().id,
+                manageIp=dev.manageIp
             )
 
         return group_buckets
@@ -109,12 +111,13 @@ class RANCIDIntegratorFacade(ZuulFacade):
         <device_name>;<device_type>;<state>[;comments]
         The 'comments' section will be used for setting collector name
         """
+        rancidDatabases = []
         dbentries = self.get_rancid_configs(name_instead_of_ip)
-        rancid_db = cStringIO.StringIO()
 
         for group in dbentries:
+            rancidDB = cStringIO.StringIO()
             for dev in dbentries[group]:
-                rancid_db.write(
+                rancidDB.write(
                     "%s;%s;%s;%s\n" % (
                         dev,
                         dbentries[group][dev]['type'],
@@ -123,48 +126,30 @@ class RANCIDIntegratorFacade(ZuulFacade):
                     )
                 )
 
-        router_content = rancid_db.getvalue()
-        rancid_db.close()
+            routerContent = rancidDB.getvalue()
+            rancidDB.close()
+            rancidDatabases.append(routerContent)
 
-        batchload_content = self.export_to_batchload(router_content)
+        batchloadContent = self.exportToBatchload(dbentries)
 
         return {
-            "router_db": router_content,
-            "batchLoad": batchload_content
+            "routerDBs": rancidDatabases,
+            "batchLoad": batchloadContent
         }
 
-    def export_to_batchload(self, router_content):
+    def exportToBatchload(self, dbentries):
         """Get router.db file content and return batchload format string."""
-        if not router_content:
+        batchloadFormat = '"{name}" setPerformanceMonitor="{collector}", ' \
+                          'setManageIp="{manageIp}", zRancidType="{type}", ' \
+                          'zRancidGroup="{group}"\n'
+        if not dbentries:
             return ''
 
         zbfile = cStringIO.StringIO()
 
-        for router_line in router_content.split('\n'):
-            entry = router_line.split(';')
-            if len(entry) < 3:  # we don't have (name, type, state)
-                # Throw out trash entries
-                continue
-            id = entry[0]
-            data = [
-                'zRancidType="%s"' % entry[1]
-            ]
-            if id.startswith('#'):
-                # Mark the device as decommissioned
-                data.append('setProductionState=-1')
-                id = id[1:]
-
-            if isip(id):
-                data.append('setManageIp="%s"' % id)
-
-            collector = 'localhost'  # default collector
-            try:
-                collector = entry[3]
-            except KeyError:
-                pass
-            data.append('setPerformanceMonitor="%s"' % collector)
-
-            zbfile.write('"%s" %s\n' % (id, ', '.join(data)))
+        for database in dbentries.itervalues():
+            for data in database.itervalues():
+                zbfile.write(batchloadFormat.format(**data))
 
         contents = zbfile.getvalue()
         zbfile.close()
