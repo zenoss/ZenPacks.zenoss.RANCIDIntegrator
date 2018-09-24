@@ -111,7 +111,7 @@ class RANCIDIntegratorFacade(ZuulFacade):
         <device_name>;<device_type>;<state>[;comments]
         The 'comments' section will be used for setting collector name
         """
-        rancidDatabases = []
+        rancidDatabases = {}
         dbentries = self.get_rancid_configs(name_instead_of_ip)
 
         for group in dbentries:
@@ -128,7 +128,7 @@ class RANCIDIntegratorFacade(ZuulFacade):
 
             routerContent = rancidDB.getvalue()
             rancidDB.close()
-            rancidDatabases.append(routerContent)
+            rancidDatabases[group] = routerContent
 
         batchloadContent = self.exportToBatchload(dbentries)
 
