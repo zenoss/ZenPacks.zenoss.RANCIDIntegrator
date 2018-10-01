@@ -17,15 +17,15 @@ RANCIDIntegrator is a ZenPack designed to allow integration between the popular
 RANCID (http://www.shrubbery.net/rancid/) tool and Zenoss. The integration
 points between the tools can be described as following:
 
-#. Zenoss will build the ``router.db`` file for RANCID. This allows for the
+#. Zenoss will build the content of the ``router.db`` files for RANCID. This allows for the
    centralization of administration activities and reduces the duplication
    of effort normally required to maintain the two tools.
 
    Implementation of this feature is as easy as adding a cronjob to hit a http
    endpoint to get router.db data
 
-#. Zenoss will build the ``batchload`` file for ``router.db`` file. This allows
-    back up devices across collectors.
+#. Zenoss will build a single ``batchload`` file for all the ``router.db`` files. This allows
+    for back up of RANCID group configuration for devices.
 
 Prerequisites
 ===============================================================================
@@ -87,7 +87,7 @@ Response example:
 
 ::
 
-{"uuid": "9ec44304-3ec2-41aa-adc7-b7d358084ea5", "action": "RANCIDIntegratorRouter", "result": {"result": {"router_db": "test_device2;cisco;down;localhost\ntest_device1;cisco;up;localhost\n", "batchload": "\"test_device2\" zRancidType=\"cisco\", setPerformanceMonitor=\"localhost\"\n\"test_device1\" zRancidType=\"cisco\", setPerformanceMonitor=\"localhost\"\n"}, "success": true}, "tid": 1, "type": "rpc", "method": "getRouters"}
+{"uuid": "9ec44304-3ec2-41aa-adc7-b7d358084ea5", "action": "RANCIDIntegratorRouter", "result": {"result": {"router_db": {"cisco": ["test_device2;cisco;down;localhost\ntest_device1;cisco;up;localhost\n"], "group2": {"test_device3;group2;down;localhost\ntest_device4;group2;up;localhost\n"]}, "batchload": "\"test_device2\" zRancidType=\"cisco\", setPerformanceMonitor=\"localhost\"\n\"test_device1\" zRancidType=\"cisco\", setPerformanceMonitor=\"localhost\"\n"\"test_device3\" zRancidType=\"group2\", setPerformanceMonitor=\"localhost\"\n\"test_device4\" zRancidType=\"group2\", setPerformanceMonitor=\"localhost\"\n"}, "success": true}, "tid": 1, "type": "rpc", "method": "getRouters"}
 
 The ``router.db`` content is accessible by ``router_db`` key.
 The ``batchLoad`` content is accessible by ``batchLoad`` key.
