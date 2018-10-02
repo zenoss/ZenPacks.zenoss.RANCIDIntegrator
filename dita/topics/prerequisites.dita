@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:topic" "topic.dtd">
+<topic id="d52e76"><title>Prerequisites</title><body><table>
+      <tgroup align="left" cols="2">
+
+        <thead>
+          <row>
+            <entry>Prerequisite</entry>
+
+            <entry>Restriction</entry>
+          </row>
+        </thead>
+
+        <tbody>
+          <row>
+            <entry><p>Product</p></entry>
+
+            <entry><p><ph conkeyref="names/platform"/> 4.x, Zenoss 2.2 or higher</p></entry>
+          </row>
+
+          <row>
+            <entry><p>Required ZenPacks</p></entry>
+
+            <entry><p>ZenPacks.zenoss.RANCIDIntegrator</p></entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table></body></topic>

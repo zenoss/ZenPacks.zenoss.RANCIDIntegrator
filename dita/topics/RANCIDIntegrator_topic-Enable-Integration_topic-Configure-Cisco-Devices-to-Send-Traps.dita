@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:topic" "topic.dtd">
+<topic id="d52e139"><title>Configure Cisco Devices to Send Traps</title><body><p>To implement this feature you must configure your Cisco devices to
+      send their SNMP traps to the <ph conkeyref="names/platform"/> server.</p><p>Link from Cisco device status pages to the most recent
+      configuration stored in your CVS repository via <xref href="http://www.viewvc.org/" scope="external" format="html">viewvc</xref>.</p></body></topic>

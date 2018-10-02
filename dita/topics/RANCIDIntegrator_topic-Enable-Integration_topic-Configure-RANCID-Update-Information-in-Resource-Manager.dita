@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:topic" "topic.dtd">
+<topic id="d52e157">
+  <title>Configure RANCID Update Information in <ph conkeyref="names/platform"/></title><body><ol>
+        <li>
+          <p>From Infrastructure &gt;Devices, click the device in the
+          device list.</p>
+        </li>
+
+        <li>
+          <p>Select Configuration Properties in the left panel.</p>
+        </li>
+
+        <li>
+          <p>Edit the appropriate configuration properties for the
+          device.</p>
+
+          <table>
+            <title>RANCID Configuration Properties</title>
+            <tgroup cols="2">
+              <thead>
+                <row>
+                  <entry>Name</entry>
+                  <entry>Description</entry>
+                </row>
+              </thead>
+              <tbody>
+                <row>
+                  <entry><p>zRancidRoot</p></entry>
+                  <entry><p>File system directory where RANCID is
+                  installed. It may be NFS mounted from the RANCID server.
+                  Default is <filepath>/opt/rancid</filepath></p></entry>
+                </row>
+                <row>
+                  <entry><p>zRancidUrl</p></entry>
+                  <entry><p>Base URL to
+                  <cmdname>viewvc</cmdname></p></entry>
+                </row>
+                <row>
+                  <entry><p>zRancidGroup</p></entry>
+                  <entry><p>RANCID group attribute. Controls what
+                  <filepath>router.db</filepath> file the device is written
+                  to. Can be set at the device class or device level. Default
+                  is <codeph outputclass="literal">router</codeph> on the
+                  <filepath>/Network/Router/Cisco</filepath>
+                  class</p></entry>
+                </row>
+                <row>
+                  <entry><p>zRancidType</p></entry>
+                  <entry><p>RANCID type attribute. Controls what device
+                  type is written to the <filepath>router.db</filepath> file.
+                  Can be set at the device class or device level. Default is
+                  <codeph outputclass="literal">cisco</codeph> on the
+                  <filepath>/Network/Router/Cisco</filepath></p></entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </table>
+        </li>
+
+        <li>
+          <p>Click <uicontrol outputclass="guibutton">Save</uicontrol> to save your changes.</p>
+        </li>
+      </ol></body></topic>

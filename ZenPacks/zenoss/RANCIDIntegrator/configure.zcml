@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configure xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:zcml="http://namespaces.zope.org/zcml">
+
+    <!-- API: Routers -->
+    <include package="Products.ZenUtils.extdirect.zope" file="meta.zcml"/>
+
+    <browser:directRouter
+        name="rancidintegrator_router"
+        for="*"
+        class=".api.RANCIDIntegratorRouter"
+        namespace="Zenoss.remote"
+        permission="zenoss.View"
+        />
+
+    <!-- API: Facades -->
+    <adapter
+        name="rancidintegrator"
+        provides=".facade.IRANCIDIntegratorFacade"
+        for="*"
+        factory=".facade.RANCIDIntegratorFacade"
+        />
+
+</configure>
